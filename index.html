@@ -1,93 +1,262 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Blessy Edison | Embedded Engineer</title>
-<style>
-body{
-font-family: Arial;
-background:#f4f4f4;
-margin:0;
-}
 
-header{
-background:#0a192f;
-color:white;
-padding:40px;
-text-align:center;
-}
+<link rel="stylesheet" href="style.css">
 
-section{
-background:white;
-margin:20px auto;
-padding:30px;
-max-width:900px;
-border-radius:8px;
-}
+<link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
 
-h2{
-color:#0a192f;
-}
-
-.project{
-background:#f9f9f9;
-padding:15px;
-margin-bottom:15px;
-border-left:4px solid #0a192f;
-}
-</style>
 </head>
 
 <body>
 
 <header>
-<h1>Blessy Edison</h1>
-<p>Aspiring Embedded Engineer</p>
-<p>STM32 | Embedded C | RTOS | IoT</p>
+
+<nav class="navbar">
+
+<h2 class="logo">Blessy Edison</h2>
+
+<ul class="nav-links">
+
+<li><a href="#about">About</a></li>
+<li><a href="#skills">Skills</a></li>
+<li><a href="#experience">Internship</a></li>
+<li><a href="#projects">Projects</a></li>
+<li><a href="#training">Training</a></li>
+<li><a href="#achievements">Achievements</a></li>
+<li><a href="#contact">Contact</a></li>
+
+</ul>
+
+<div class="menu-btn">
+<i class="ri-menu-line"></i>
+</div>
+
+</nav>
+
 </header>
 
-<section>
-<h2>About Me</h2>
-<p>M.Tech Embedded Systems student interested in embedded firmware,
-real-time systems, and industrial automation.</p>
+
+<section class="hero">
+
+<div class="hero-text">
+
+<h1>Hello I'm <span>Blessy Edison</span></h1>
+
+<h3>Aspiring Embedded Engineer</h3>
+
+<p>
+M.Tech Embedded Systems student passionate about 
+real-time embedded systems, STM32 microcontrollers and robotics.
+</p>
+
+<div class="hero-buttons">
+
+<a href="resume.pdf" download class="btn">Download Resume</a>
+
+<a href="https://github.com/blessyed" class="btn-outline">GitHub</a>
+
+</div>
+
+</div>
+
 </section>
 
-<section>
+
+<section id="about">
+
+<h2>About Me</h2>
+
+<p>
+Entry-level Embedded Engineer with strong hands-on experience in STM32,
+RTOS systems and industrial R&D environments. Completed a 6-month internship
+at Kawasaki Robotics working on sensor detection, embedded firmware,
+PCB design and real-time visualization.
+</p>
+
+</section>
+
+
+<section id="skills">
+
+<h2>Technical Skills</h2>
+
+<div class="skills-grid">
+
+<div class="skill">
+<h3>Programming</h3>
+<p>Embedded C, C++, Python</p>
+</div>
+
+<div class="skill">
+<h3>Microcontrollers</h3>
+<p>STM32, PIC16F877A, ESP32</p>
+</div>
+
+<div class="skill">
+<h3>Communication</h3>
+<p>CAN, UART, SPI, I2C, TCP/IP</p>
+</div>
+
+<div class="skill">
+<h3>RTOS</h3>
+<p>Task scheduling, synchronization</p>
+</div>
+
+<div class="skill">
+<h3>Hardware</h3>
+<p>Sensor interfacing, PCB design (KiCad)</p>
+</div>
+
+</div>
+
+</section>
+
+
+<section id="experience">
+
+<h2>Industrial Internship</h2>
+
+<div class="card">
+
+<h3>Kawasaki Robotics – R&D Intern</h3>
+
+<ul>
+
+<li>Worked on semiconductor wafer handling robotics</li>
+
+<li>Implemented long range detection using ToF sensors</li>
+
+<li>Developed STM32 firmware</li>
+
+<li>Designed PCB using KiCad</li>
+
+<li>Implemented TCP/IP communication</li>
+
+<li>Developed PyQt GUI dashboard</li>
+
+</ul>
+
+</div>
+
+</section>
+
+
+<section id="projects">
+
 <h2>Projects</h2>
 
-<div class="project">
-<h3>Predictive Analytics for EV Charging Stations</h3>
-<p>Machine learning model to predict EV charging demand.</p>
+<div class="projects-grid">
+
+<div class="project-card">
+
+<img src="images/project1.png">
+
+<h3>RTOS Collision Avoidance</h3>
+
+<p>Real-time system using RTOS tasks for sensor monitoring and safety response.</p>
+
 </div>
 
-<div class="project">
-<h3>STM32 Microcontroller Health Monitoring System</h3>
-<p>Embedded monitoring system for industrial device safety.</p>
+
+<div class="project-card">
+
+<img src="images/project2.png">
+
+<h3>Black Car Box</h3>
+
+<p>Vehicle event data recorder implemented using PIC16F877A.</p>
+
 </div>
 
-<div class="project">
-<h3>Railway Track Crack Detection</h3>
-<p>Sensor based system to detect railway track damage.</p>
+
+<div class="project-card">
+
+<h3>Fault Detection in H Bridge</h3>
+
+<p>Machine learning based inverter fault classification.</p>
+
+</div>
+
 </div>
 
 </section>
 
-<section>
-<h2>Skills</h2>
+
+<section id="training">
+
+<h2>Training</h2>
+
+<div class="card">
+
+<h3>Advanced Embedded Systems – Emertxe</h3>
+
 <ul>
-<li>Embedded C</li>
+
+<li>C Programming</li>
 <li>C++</li>
-<li>Python</li>
-<li>STM32</li>
-<li>ESP32</li>
-<li>RTOS</li>
+<li>Data Structures</li>
+<li>Embedded Linux</li>
+
 </ul>
+
+</div>
+
 </section>
 
-<section>
-<h2>Contact</h2>
-<p>Email: blessyedison14@gmail.com</p>
-<p>GitHub: github.com/blessyed</p>
+
+<section id="achievements">
+
+<h2>Achievements</h2>
+
+<ul class="achievements">
+
+<li>President – EEE Department</li>
+
+<li>Finalist – Niral Thiruvizha Project Competition</li>
+
+<li>Published research paper</li>
+
+<li>6-month Industrial Internship at Kawasaki Robotics</li>
+
+</ul>
+
 </section>
+
+
+<section id="contact">
+
+<h2>Contact</h2>
+
+<form>
+
+<input type="text" placeholder="Your Name">
+
+<input type="email" placeholder="Email">
+
+<textarea placeholder="Message"></textarea>
+
+<button type="submit">Send Message</button>
+
+</form>
+
+</section>
+
+
+<footer>
+
+<p>© 2026 Blessy Edison</p>
+
+</footer>
+
+
+<script src="script.js"></script>
 
 </body>
 </html>
