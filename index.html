@@ -1,280 +1,984 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Blessy Edison Portfolio</title>
-
-<link rel="stylesheet" href="style.css">
-
+<title>Blessy Edison | Embedded Systems Engineer</title>
 <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+<style>
+:root {
+  --bg: #060d18;
+  --bg2: #0a1628;
+  --bg3: #0f1f3a;
+  --cyan: #00e5ff;
+  --cyan2: #00b4d8;
+  --purple: #a855f7;
+  --text: #e2e8f0;
+  --muted: #64748b;
+  --card: #0d1b2e;
+  --border: rgba(0,229,255,0.15);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overflow-x:hidden;}
 
+/* Scrollbar */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--cyan);border-radius:2px;}
+
+/* Noise overlay */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:0.4;
+}
+
+/* ── HEADER ── */
+.header{
+  position:fixed;top:0;width:100%;padding:18px 8%;
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(6,13,24,0.85);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);z-index:1000;
+  transition:all .3s;
+}
+.logo{font-family:'Space Mono',monospace;font-size:18px;color:var(--cyan);text-decoration:none;letter-spacing:2px;}
+.logo span{color:white;}
+.navbar{display:flex;gap:28px;align-items:center;}
+.navbar a{color:var(--muted);text-decoration:none;font-size:14px;font-family:'Space Mono',monospace;letter-spacing:1px;transition:.3s;position:relative;}
+.navbar a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--cyan);transition:.3s;}
+.navbar a:hover{color:var(--cyan);}
+.navbar a:hover::after{width:100%;}
+.menu-btn{display:none;background:none;border:none;color:var(--cyan);font-size:24px;cursor:pointer;}
+
+/* ── HOME ── */
+.home{
+  height:100vh;display:flex;align-items:center;justify-content:space-between;
+  padding:0 8%;gap:40px;position:relative;overflow:hidden;
+}
+.home::before{
+  content:'';position:absolute;top:-200px;right:-200px;
+  width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,229,255,0.06) 0%,transparent 70%);
+  pointer-events:none;
+}
+.home-content{max-width:580px;z-index:1;}
+.home-content .greeting{
+  font-family:'Space Mono',monospace;font-size:13px;color:var(--cyan);
+  letter-spacing:4px;text-transform:uppercase;margin-bottom:16px;
+  display:flex;align-items:center;gap:10px;
+}
+.home-content .greeting::before{content:'';width:30px;height:1px;background:var(--cyan);}
+.home-content h1{font-size:clamp(42px,5vw,68px);font-weight:800;line-height:1.05;margin-bottom:12px;}
+.home-content h1 .name-highlight{
+  background:linear-gradient(135deg,var(--cyan),var(--purple));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.home-content .role-line{font-size:clamp(18px,2vw,26px);color:var(--muted);margin-bottom:20px;font-family:'Space Mono',monospace;}
+.home-content .role-line span{color:var(--cyan);}
+.home-content p{font-size:15px;line-height:1.8;color:#94a3b8;margin-bottom:32px;max-width:480px;}
+.social-row{display:flex;gap:14px;margin-bottom:32px;}
+.social-row a{
+  width:42px;height:42px;border-radius:50%;border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--cyan);font-size:18px;text-decoration:none;
+  transition:.3s;background:rgba(0,229,255,0.04);
+}
+.social-row a:hover{background:var(--cyan);color:var(--bg);border-color:var(--cyan);transform:translateY(-3px);}
+.btn-group{display:flex;gap:16px;flex-wrap:wrap;}
+.btn-primary{
+  padding:13px 30px;background:var(--cyan);color:var(--bg);
+  border-radius:4px;text-decoration:none;font-weight:700;font-size:14px;
+  font-family:'Space Mono',monospace;letter-spacing:1px;
+  transition:.3s;border:1px solid var(--cyan);
+}
+.btn-primary:hover{background:transparent;color:var(--cyan);}
+.btn-outline{
+  padding:13px 30px;border:1px solid var(--border);color:var(--text);
+  border-radius:4px;text-decoration:none;font-size:14px;
+  font-family:'Space Mono',monospace;letter-spacing:1px;
+  transition:.3s;
+}
+.btn-outline:hover{border-color:var(--cyan);color:var(--cyan);}
+
+/* Glowing circle image */
+.home-img{flex-shrink:0;z-index:1;}
+.glowing-circle{
+  position:relative;width:340px;height:340px;border-radius:50%;
+  display:flex;justify-content:center;align-items:center;
+}
+.glowing-circle span{
+  position:absolute;width:100%;height:100%;border-radius:50%;
+  background:conic-gradient(var(--cyan),var(--purple),var(--cyan));
+  animation:rotate 4s linear infinite;
+}
+.glowing-circle span:nth-child(1){filter:blur(12px);opacity:0.7;}
+.image{position:absolute;width:318px;height:318px;border-radius:50%;overflow:hidden;background:var(--bg3);}
+.image img{width:100%;height:100%;object-fit:cover;}
+.image-placeholder{
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  font-size:80px;color:var(--cyan);opacity:0.3;
+}
+@keyframes rotate{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+
+/* ── SECTION COMMONS ── */
+section{padding:90px 8%;position:relative;}
+.section-tag{
+  font-family:'Space Mono',monospace;font-size:11px;color:var(--cyan);
+  letter-spacing:4px;text-transform:uppercase;margin-bottom:12px;
+  display:flex;align-items:center;gap:10px;
+}
+.section-tag::before{content:'//';color:var(--purple);}
+.section-title{font-size:clamp(32px,4vw,48px);font-weight:800;margin-bottom:48px;line-height:1.1;}
+.section-title span{color:var(--cyan);}
+.section-divider{width:60px;height:2px;background:linear-gradient(to right,var(--cyan),var(--purple));margin-bottom:48px;}
+
+/* ── ABOUT ── */
+.about-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:60px;align-items:center;}
+.about-img-wrap{position:relative;}
+.about-img-box{
+  width:100%;aspect-ratio:3/4;border-radius:8px;background:var(--bg3);
+  border:1px solid var(--border);overflow:hidden;display:flex;align-items:center;justify-content:center;
+  font-size:100px;color:var(--cyan);opacity:0.2;
+}
+.about-img-box img{width:100%;height:100%;object-fit:cover;opacity:1;}
+.about-accent{
+  position:absolute;bottom:-20px;right:-20px;width:120px;height:120px;
+  border:2px solid var(--cyan);border-radius:8px;opacity:0.3;z-index:-1;
+}
+.about-accent2{
+  position:absolute;top:-20px;left:-20px;width:80px;height:80px;
+  border:1px solid var(--purple);border-radius:4px;opacity:0.3;z-index:-1;
+}
+.about-text p{font-size:15px;line-height:1.9;color:#94a3b8;margin-bottom:20px;}
+.about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px;}
+.stat-box{
+  background:var(--card);border:1px solid var(--border);border-radius:8px;
+  padding:20px;text-align:center;transition:.3s;
+}
+.stat-box:hover{border-color:var(--cyan);transform:translateY(-4px);}
+.stat-box .num{font-size:32px;font-weight:800;color:var(--cyan);font-family:'Space Mono',monospace;}
+.stat-box .label{font-size:12px;color:var(--muted);margin-top:4px;letter-spacing:1px;}
+
+/* ── SKILLS ── */
+.skills-wrap{display:grid;grid-template-columns:1fr 1fr;gap:60px;}
+.skill-group-title{
+  font-size:18px;font-weight:700;margin-bottom:28px;color:var(--text);
+  padding-bottom:10px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+}
+.skill-group-title i{color:var(--cyan);}
+.skill-bar-item{margin-bottom:22px;}
+.skill-bar-label{display:flex;justify-content:space-between;margin-bottom:8px;font-size:13px;font-family:'Space Mono',monospace;}
+.skill-bar-label span:last-child{color:var(--cyan);}
+.skill-bar-track{height:5px;background:var(--bg3);border-radius:3px;overflow:hidden;}
+.skill-bar-fill{height:100%;border-radius:3px;background:linear-gradient(to right,var(--cyan),var(--purple));width:0;transition:width 1.2s cubic-bezier(.4,0,.2,1);}
+
+.pro-skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.pro-skill-card{
+  background:var(--card);border:1px solid var(--border);border-radius:10px;
+  padding:24px;text-align:center;transition:.3s;
+}
+.pro-skill-card:hover{border-color:var(--cyan);transform:translateY(-4px);}
+.circle-wrap{position:relative;width:90px;height:90px;margin:0 auto 14px;}
+.circle-wrap svg{transform:rotate(-90deg);}
+.circle-bg{fill:none;stroke:var(--bg3);stroke-width:6;}
+.circle-fill{fill:none;stroke-width:6;stroke-linecap:round;stroke-dasharray:251.2;stroke-dashoffset:251.2;transition:stroke-dashoffset 1.4s cubic-bezier(.4,0,.2,1);}
+.circle-fill.cyan{stroke:var(--cyan);}
+.circle-fill.purple{stroke:var(--purple);}
+.circle-text{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:18px;font-weight:700;font-family:'Space Mono',monospace;color:var(--cyan);
+}
+.pro-skill-card.purple-theme .circle-text{color:var(--purple);}
+.pro-skill-label{font-size:13px;color:var(--muted);letter-spacing:1px;}
+
+/* ── EXPERIENCE TIMELINE ── */
+.timeline{position:relative;padding-left:40px;}
+.timeline::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;
+  width:2px;background:linear-gradient(to bottom,var(--cyan),var(--purple));
+}
+.timeline-item{position:relative;margin-bottom:48px;}
+.timeline-dot{
+  position:absolute;left:-49px;top:4px;
+  width:18px;height:18px;border-radius:50%;
+  background:var(--cyan);border:3px solid var(--bg);
+  box-shadow:0 0 12px var(--cyan);
+}
+.timeline-date{
+  font-family:'Space Mono',monospace;font-size:12px;color:var(--cyan);
+  letter-spacing:2px;margin-bottom:8px;
+}
+.timeline-card{
+  background:var(--card);border:1px solid var(--border);border-radius:10px;
+  padding:28px;transition:.3s;
+}
+.timeline-card:hover{border-color:var(--cyan);box-shadow:0 0 30px rgba(0,229,255,0.06);}
+.timeline-header{display:flex;align-items:flex-start;gap:18px;margin-bottom:18px;}
+.company-logo{
+  width:54px;height:54px;border-radius:10px;
+  background:linear-gradient(135deg,var(--cyan),var(--purple));
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;color:var(--bg);font-weight:800;flex-shrink:0;
+  font-family:'Space Mono',monospace;
+}
+.timeline-header-text h3{font-size:18px;font-weight:700;margin-bottom:4px;}
+.timeline-header-text .company{font-size:13px;color:var(--cyan);font-family:'Space Mono',monospace;}
+.timeline-card ul{list-style:none;padding:0;}
+.timeline-card ul li{
+  font-size:14px;color:#94a3b8;padding:6px 0 6px 20px;
+  position:relative;line-height:1.7;border-bottom:1px solid rgba(255,255,255,0.04);
+}
+.timeline-card ul li:last-child{border-bottom:none;}
+.timeline-card ul li::before{
+  content:'▸';position:absolute;left:0;color:var(--cyan);font-size:12px;
+}
+
+/* ── EDUCATION ── */
+.edu-timeline-dot{background:var(--purple);box-shadow:0 0 12px var(--purple);}
+.edu-card .timeline-header-text .company{color:var(--purple);}
+.edu-card{border-color:rgba(168,85,247,0.2);}
+.edu-card:hover{border-color:var(--purple);box-shadow:0 0 30px rgba(168,85,247,0.06);}
+.edu-logo{background:linear-gradient(135deg,var(--purple),#ec4899);}
+.edu-degree{font-size:14px;color:#94a3b8;margin-top:8px;line-height:1.6;}
+
+/* ── PROJECTS ── */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;}
+.project-card{
+  position:relative;border-radius:10px;overflow:hidden;
+  aspect-ratio:4/3;cursor:pointer;
+  background:var(--bg3);border:1px solid var(--border);
+}
+.project-card .project-img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .5s ease;
+  background:linear-gradient(135deg,var(--bg3),var(--bg2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:60px;
+}
+.project-card:hover .project-img-bg{transform:scale(1.08);}
+.project-img-bg{
+  position:absolute;inset:0;background:var(--bg3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:60px;transition:transform .5s;
+}
+.project-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(6,13,24,0.97) 0%,rgba(6,13,24,0.85) 50%,transparent 100%);
+  opacity:0;transition:.4s;
+  display:flex;flex-direction:column;justify-content:flex-end;padding:24px;
+}
+.project-card:hover .project-overlay{opacity:1;}
+.project-overlay h3{font-size:18px;font-weight:700;margin-bottom:8px;transform:translateY(10px);transition:.4s;}
+.project-overlay p{font-size:13px;color:#94a3b8;line-height:1.6;transform:translateY(10px);transition:.4s .05s;}
+.project-overlay .proj-link{
+  display:inline-flex;align-items:center;gap:6px;
+  color:var(--cyan);font-size:12px;font-family:'Space Mono',monospace;
+  text-decoration:none;margin-top:12px;transform:translateY(10px);transition:.4s .1s;
+}
+.project-card:hover .project-overlay h3,
+.project-card:hover .project-overlay p,
+.project-card:hover .project-overlay .proj-link{transform:translateY(0);}
+.project-tag{
+  position:absolute;top:14px;right:14px;
+  background:rgba(0,229,255,0.15);border:1px solid rgba(0,229,255,0.3);
+  color:var(--cyan);font-size:10px;padding:3px 10px;border-radius:20px;
+  font-family:'Space Mono',monospace;letter-spacing:1px;
+}
+
+/* ── CONTACT ── */
+.contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:60px;align-items:start;}
+.contact-info h3{font-size:26px;font-weight:700;margin-bottom:16px;}
+.contact-info p{font-size:14px;color:#94a3b8;line-height:1.8;margin-bottom:32px;}
+.contact-detail{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+.contact-detail i{font-size:20px;color:var(--cyan);}
+.contact-detail span{font-size:14px;color:#94a3b8;font-family:'Space Mono',monospace;}
+.social-links{display:flex;gap:12px;margin-top:28px;}
+.social-links a{
+  width:44px;height:44px;border-radius:50%;border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text);font-size:18px;text-decoration:none;transition:.3s;
+}
+.social-links a:hover{background:var(--cyan);color:var(--bg);border-color:var(--cyan);}
+
+.contact-form{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:36px;}
+.form-group{margin-bottom:20px;}
+.form-group label{display:block;font-size:12px;color:var(--cyan);letter-spacing:2px;margin-bottom:8px;font-family:'Space Mono',monospace;}
+.form-group input,.form-group textarea{
+  width:100%;padding:14px 16px;background:var(--bg2);
+  border:1px solid var(--border);border-radius:6px;
+  color:var(--text);font-family:'Syne',sans-serif;font-size:14px;
+  transition:.3s;outline:none;
+}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,0.08);}
+.form-group textarea{height:130px;resize:vertical;}
+.submit-btn{
+  width:100%;padding:15px;background:var(--cyan);color:var(--bg);
+  border:none;border-radius:6px;font-size:14px;font-weight:700;
+  font-family:'Space Mono',monospace;letter-spacing:2px;cursor:pointer;
+  transition:.3s;
+}
+.submit-btn:hover{background:var(--cyan2);transform:translateY(-2px);}
+
+/* ── FOOTER ── */
+footer{
+  text-align:center;padding:32px;border-top:1px solid var(--border);
+  font-size:13px;color:var(--muted);font-family:'Space Mono',monospace;
+}
+footer span{color:var(--cyan);}
+
+/* ── MOBILE ── */
+@media(max-width:900px){
+  .about-grid,.skills-wrap,.contact-grid{grid-template-columns:1fr;}
+  .about-img-wrap{display:none;}
+  .home{flex-direction:column;justify-content:center;text-align:center;gap:40px;padding-top:100px;}
+  .home-content .greeting{justify-content:center;}
+  .btn-group,.social-row{justify-content:center;}
+  .glowing-circle{width:260px;height:260px;}
+  .image{width:242px;height:242px;}
+  .navbar{display:none;flex-direction:column;position:fixed;top:70px;left:0;right:0;
+    background:rgba(6,13,24,0.97);padding:20px;gap:20px;border-bottom:1px solid var(--border);}
+  .navbar.open{display:flex;}
+  .menu-btn{display:block;}
+  section{padding:70px 6%;}
+  .pro-skills-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:500px){
+  .about-stats{grid-template-columns:1fr 1fr;}
+  .pro-skills-grid{grid-template-columns:1fr;}
+}
+
+/* Fade in animation */
+.fade-in{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.fade-in.visible{opacity:1;transform:translateY(0);}
+</style>
 </head>
-
 <body>
 
+<!-- HEADER -->
 <header class="header">
-
-<a href="#" class="logo">Portfolio.</a>
-
-<nav class="navbar">
-
-<a href="#">Home</a>
-<a href="#about">About</a>
-<a href="#skills">Skills</a>
-<a href="#projects">Project</a>
-<a href="#contact">Contact</a>
-
-</nav>
-
+  <a href="#" class="logo"><span>BE</span>.portfolio</a>
+  <button class="menu-btn" id="menuBtn"><i class='bx bx-menu'></i></button>
+  <nav class="navbar" id="navbar">
+    <a href="#">Home</a>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#education">Education</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </nav>
 </header>
 
-
-<section class="home">
-
-<div class="home-content">
-
-<h3>Hello, It's Me</h3>
-
-<h1>Blessy Edison</h1>
-
-<h3>And I'm a <span id="typing"></span></h3>
-
-<p>
-Embedded Systems Engineer passionate about STM32,
-RTOS systems, embedded AI and robotics automation.
-</p>
-
-<div class="social-media">
-
-<a href="#"><i class='bx bxl-github'></i></a>
-<a href="#"><i class='bx bxl-linkedin'></i></a>
-<a href="#"><i class='bx bxl-instagram'></i></a>
-
-</div>
-
-<a href="resume.pdf" class="btn">Download Resume</a>
-
-</div>
-
-
-<div class="home-img">
-
-<div class="glowing-circle">
-
-<span></span>
-<span></span>
-
-<div class="image">
-
-<img src="images/profile.jpg">
-
-</div>
-
-</div>
-
-</div>
-
+<!-- HOME -->
+<section class="home" id="home">
+  <div class="home-content">
+    <p class="greeting">Embedded Systems Engineer</p>
+    <h1>Blessy <span class="name-highlight">Edison</span></h1>
+    <h3 class="role-line">I'm a <span id="typing"></span></h3>
+    <p>M.Tech Embedded Systems student passionate about STM32 firmware, RTOS systems, industrial automation, and robotics. Building real-world embedded solutions that matter.</p>
+    <div class="social-row">
+      <a href="https://github.com/blessyed" aria-label="GitHub"><i class='bx bxl-github'></i></a>
+      <a href="https://www.linkedin.com/in/blessyedison11/" aria-label="LinkedIn"><i class='bx bxl-linkedin'></i></a>
+      <a href="mailto:blessyedison14@gmail.com" aria-label="Email"><i class='bx bx-envelope'></i></a>
+    </div>
+    <div class="btn-group">
+      <a href="resume.pdf" class="btn-primary">Download Resume</a>
+      <a href="#contact" class="btn-outline">Get In Touch</a>
+    </div>
+  </div>
+  <div class="home-img">
+    <div class="glowing-circle">
+      <span></span>
+      <span></span>
+      <div class="image">
+        <img src="images/profile.jpg" alt="Blessy Edison" onerror="this.parentElement.innerHTML='<div class=image-placeholder><i class=\'bx bx-user\'></i></div>'">
+      </div>
+    </div>
+  </div>
 </section>
 
-<script src="script.js"></script>
-
-</body>
-</html>
-
-
+<!-- ABOUT -->
 <section id="about">
-
-<h2>About Me</h2>
-
-<p>
-Entry-level Embedded Engineer with strong hands-on experience in STM32,
-RTOS systems and industrial R&D environments. Completed a 6-month internship
-at Kawasaki Robotics working on sensor detection, embedded firmware,
-PCB design and real-time visualization.
-</p>
-
+  <div class="fade-in">
+    <p class="section-tag">Who I am</p>
+    <h2 class="section-title">About <span>Me</span></h2>
+  </div>
+  <div class="about-grid fade-in">
+    <div class="about-img-wrap">
+      <div class="about-img-box">
+        <img src="images/profile.jpg" alt="Blessy Edison" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'bx bx-user\'></i>'">
+      </div>
+      <div class="about-accent"></div>
+      <div class="about-accent2"></div>
+    </div>
+    <div class="about-text">
+      <p>Driven and detail-oriented <strong>M.Tech Embedded Systems</strong> student with strong practical experience in embedded firmware development, real-time systems, and industrial automation. Proficient in Embedded C, C++, Python, STM32 microcontrollers, RTOS concepts, sensor interfacing, and communication protocols such as CAN, UART, SPI, and I2C.</p>
+      <p>Experienced in designing and developing end-to-end embedded solutions including firmware development, PCB design using KiCad, TCP/IP communication, and real-time monitoring systems. Completed a <strong>6-month R&D internship at Kawasaki Robotics</strong> in the Semiconductor Wafer Handling Division, working on industrial robotic systems involving Time-of-Flight sensors, STM32-based firmware, real-time sensor processing, and GUI-based monitoring applications.</p>
+      <p>Passionate about automotive embedded systems, industrial automation, robotics, IoT, and safety-critical applications. Strong problem-solving abilities and enthusiasm for developing innovative real-world embedded solutions.</p>
+      <div class="about-stats">
+        <div class="stat-box">
+          <div class="num">6+</div>
+          <div class="label">Months Internship</div>
+        </div>
+        <div class="stat-box">
+          <div class="num">5+</div>
+          <div class="label">Projects Built</div>
+        </div>
+        <div class="stat-box">
+          <div class="num">3+</div>
+          <div class="label">MCU Platforms</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-
+<!-- SKILLS -->
 <section id="skills">
-
-<h2>Technical Skills</h2>
-
-<div class="skills-grid">
-
-<div class="skill">
-<h3>Programming</h3>
-<p>Embedded C, C++, Python</p>
-</div>
-
-<div class="skill">
-<h3>Microcontrollers</h3>
-<p>STM32, PIC16F877A, ESP32</p>
-</div>
-
-<div class="skill">
-<h3>Communication</h3>
-<p>CAN, UART, SPI, I2C, TCP/IP</p>
-</div>
-
-<div class="skill">
-<h3>RTOS</h3>
-<p>Task scheduling, synchronization</p>
-</div>
-
-<div class="skill">
-<h3>Hardware</h3>
-<p>Sensor interfacing, PCB design (KiCad)</p>
-</div>
-
-</div>
-
+  <div class="fade-in">
+    <p class="section-tag">What I know</p>
+    <h2 class="section-title">My <span>Skills</span></h2>
+  </div>
+  <div class="skills-wrap fade-in">
+    <div>
+      <h3 class="skill-group-title"><i class='bx bx-chip'></i> Technical Skills</h3>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label"><span>Advanced C / Embedded C</span><span>90%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-w="90"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label"><span>Python</span><span>80%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-w="80"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label"><span>C++ (OOP)</span><span>75%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-w="75"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label"><span>RTOS (FreeRTOS)</span><span>78%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-w="78"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label"><span>STM32 / PIC / ESP32</span><span>85%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-w="85"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label"><span>CAN / UART / SPI / I2C</span><span>82%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-w="82"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label"><span>PCB Design (KiCad)</span><span>70%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-w="70"></div></div>
+      </div>
+    </div>
+    <div>
+      <h3 class="skill-group-title"><i class='bx bx-brain'></i> Professional Skills</h3>
+      <div class="pro-skills-grid">
+        <div class="pro-skill-card">
+          <div class="circle-wrap">
+            <svg width="90" height="90" viewBox="0 0 90 90">
+              <circle class="circle-bg" cx="45" cy="45" r="40"/>
+              <circle class="circle-fill cyan" cx="45" cy="45" r="40" data-pct="85"/>
+            </svg>
+            <div class="circle-text">85%</div>
+          </div>
+          <div class="pro-skill-label">Problem Solving</div>
+        </div>
+        <div class="pro-skill-card purple-theme">
+          <div class="circle-wrap">
+            <svg width="90" height="90" viewBox="0 0 90 90">
+              <circle class="circle-bg" cx="45" cy="45" r="40"/>
+              <circle class="circle-fill purple" cx="45" cy="45" r="40" data-pct="80"/>
+            </svg>
+            <div class="circle-text">80%</div>
+          </div>
+          <div class="pro-skill-label">Creativity</div>
+        </div>
+        <div class="pro-skill-card">
+          <div class="circle-wrap">
+            <svg width="90" height="90" viewBox="0 0 90 90">
+              <circle class="circle-bg" cx="45" cy="45" r="40"/>
+              <circle class="circle-fill cyan" cx="45" cy="45" r="40" data-pct="70"/>
+            </svg>
+            <div class="circle-text">70%</div>
+          </div>
+          <div class="pro-skill-label">Communication</div>
+        </div>
+        <div class="pro-skill-card purple-theme">
+          <div class="circle-wrap">
+            <svg width="90" height="90" viewBox="0 0 90 90">
+              <circle class="circle-bg" cx="45" cy="45" r="40"/>
+              <circle class="circle-fill purple" cx="45" cy="45" r="40" data-pct="88"/>
+            </svg>
+            <div class="circle-text">88%</div>
+          </div>
+          <div class="pro-skill-label">Adaptability</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-
+<!-- EXPERIENCE -->
 <section id="experience">
-
-<h2>Industrial Internship</h2>
-
-<div class="card">
-
-<h3>Kawasaki Robotics – R&D Intern</h3>
-
-<ul>
-
-<li>Worked on semiconductor wafer handling robotics</li>
-
-<li>Implemented long range detection using ToF sensors</li>
-
-<li>Developed STM32 firmware</li>
-
-<li>Designed PCB using KiCad</li>
-
-<li>Implemented TCP/IP communication</li>
-
-<li>Developed PyQt GUI dashboard</li>
-
-</ul>
-
-</div>
-
+  <div class="fade-in">
+    <p class="section-tag">Where I've worked</p>
+    <h2 class="section-title">Industry <span>Experience</span></h2>
+  </div>
+  <div class="timeline fade-in">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">Jan 2024 — Jul 2024 · 6 Months</div>
+      <div class="timeline-card">
+        <div class="timeline-header">
+          <div class="company-logo">KR</div>
+          <div class="timeline-header-text">
+            <h3>R&D Intern — Semiconductor Wafer Handling Division</h3>
+            <div class="company">Kawasaki Robotics · Coimbatore, India</div>
+          </div>
+        </div>
+        <ul>
+          <li>Worked on industrial robotic automation systems for semiconductor wafer handling applications.</li>
+          <li>Developed bare-metal STM32 firmware for real-time sensor acquisition, calibration, and processing.</li>
+          <li>Implemented long-distance wafer detection using Time-of-Flight (CH101) sensors interfaced with STM32 microcontrollers.</li>
+          <li>Designed custom PCBs using KiCad integrating sensors, controllers, and power circuitry.</li>
+          <li>Implemented TCP/IP socket communication for real-time industrial data transfer.</li>
+          <li>Developed Python PyQt-based GUI applications for live monitoring and visualization.</li>
+          <li>Gained practical exposure to industrial R&D workflows, embedded system design, and customer-oriented product development.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- EDUCATION -->
+<section id="education">
+  <div class="fade-in">
+    <p class="section-tag">Academic journey</p>
+    <h2 class="section-title"><span>Education</span></h2>
+  </div>
+  <div class="timeline fade-in">
+    <div class="timeline-item">
+      <div class="timeline-dot edu-timeline-dot"></div>
+      <div class="timeline-date">2025 — Present</div>
+      <div class="timeline-card edu-card">
+        <div class="timeline-header">
+          <div class="company-logo edu-logo">AV</div>
+          <div class="timeline-header-text">
+            <h3>M.Tech in Embedded Systems</h3>
+            <div class="company" style="color:var(--purple)">Amrita Vishwa Vidyapeetham</div>
+          </div>
+        </div>
+        <p class="edu-degree">Postgraduate specialization in Embedded Systems Engineering — covering advanced microcontroller architectures, RTOS, embedded AI, IoT, and safety-critical systems design.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot edu-timeline-dot"></div>
+      <div class="timeline-date">2020 — 2024</div>
+      <div class="timeline-card edu-card">
+        <div class="timeline-header">
+          <div class="company-logo edu-logo">CI</div>
+          <div class="timeline-header-text">
+            <h3>B.E in Electrical and Electronics Engineering</h3>
+            <div class="company" style="color:var(--purple)">Coimbatore Institute of Engineering and Technology</div>
+          </div>
+        </div>
+        <p class="edu-degree">Undergraduate degree in EEE — Hands-on experience with power systems, microcontrollers, embedded systems, and industrial automation through labs and project work.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot edu-timeline-dot"></div>
+      <div class="timeline-date">Higher Secondary (12th Grade)</div>
+      <div class="timeline-card edu-card">
+        <div class="timeline-header">
+          <div class="company-logo edu-logo" style="font-size:14px">SCG</div>
+          <div class="timeline-header-text">
+            <h3>Higher Secondary Education</h3>
+            <div class="company" style="color:var(--purple)">St Chrysostom Girls' Higher Secondary School</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot edu-timeline-dot"></div>
+      <div class="timeline-date">Secondary Education (10th Grade)</div>
+      <div class="timeline-card edu-card">
+        <div class="timeline-header">
+          <div class="company-logo edu-logo" style="font-size:14px">NB</div>
+          <div class="timeline-header-text">
+            <h3>Secondary Education</h3>
+            <div class="company" style="color:var(--purple)">Navajeevan Bethany Vidyalaya</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- PROJECTS -->
 <section id="projects">
+  <div class="fade-in">
+    <p class="section-tag">What I've built</p>
+    <h2 class="section-title">Latest <span>Projects</span></h2>
+  </div>
+  <div class="projects-grid fade-in">
 
-<h2>Projects</h2>
+    <div class="project-card" onclick="window.open('https://github.com/blessyedison','_blank')">
+      <div class="project-img-bg" style="font-size:0">
+        <img src="images/project1.png" style="width:100%;height:100%;object-fit:cover;" alt="RTOS Collision Avoidance" onerror="this.parentElement.innerHTML='<span style=font-size:60px>🤖</span>'">
+      </div>
+      <span class="project-tag">RTOS · STM32</span>
+      <div class="project-overlay">
+        <h3>RTOS Collision Avoidance</h3>
+        <p>Real-time collision avoidance system using FreeRTOS tasks for multi-sensor monitoring and safety response on STM32 microcontroller.</p>
+        <a class="proj-link" href="https://github.com/blessyedison" target="_blank"><i class='bx bxl-github'></i> View on GitHub →</a>
+      </div>
+    </div>
 
-<div class="projects-grid">
+    <div class="project-card" onclick="window.open('https://github.com/blessyedison','_blank')">
+      <div class="project-img-bg" style="font-size:0">
+        <img src="images/project2.png" style="width:100%;height:100%;object-fit:cover;" alt="Black Car Box" onerror="this.parentElement.innerHTML='<span style=font-size:60px>🚗</span>'">
+      </div>
+      <span class="project-tag">PIC16F877A</span>
+      <div class="project-overlay">
+        <h3>Black Car Box</h3>
+        <p>Vehicle event data recorder (EDR) implemented using PIC16F877A microcontroller. Logs critical vehicle parameters for post-accident analysis.</p>
+        <a class="proj-link" href="https://github.com/blessyedison" target="_blank"><i class='bx bxl-github'></i> View on GitHub →</a>
+      </div>
+    </div>
 
-<div class="project-card">
+    <div class="project-card" onclick="window.open('https://github.com/blessyedison','_blank')">
+      <div class="project-img-bg">⚡</div>
+      <span class="project-tag">ML · Inverter</span>
+      <div class="project-overlay">
+        <h3>Fault Detection in H-Bridge</h3>
+        <p>Machine learning-based inverter fault classification system that identifies and categorizes faults in H-bridge configurations using sensor data.</p>
+        <a class="proj-link" href="https://github.com/blessyedison" target="_blank"><i class='bx bxl-github'></i> View on GitHub →</a>
+      </div>
+    </div>
 
-<img src="images/project1.png">
+    <div class="project-card" onclick="window.open('https://github.com/blessyedison','_blank')">
+      <div class="project-img-bg">📡</div>
+      <span class="project-tag">ToF · STM32</span>
+      <div class="project-overlay">
+        <h3>Digital Twin Monitoring</h3>
+        <p>Real-time digital twin system with PyQt GUI for live visualization of sensor data from STM32-based embedded nodes via TCP/IP.</p>
+        <a class="proj-link" href="https://github.com/blessyedison" target="_blank"><i class='bx bxl-github'></i> View on GitHub →</a>
+      </div>
+    </div>
 
-<h3>RTOS Collision Avoidance</h3>
+    <div class="project-card" onclick="window.open('https://github.com/blessyedison','_blank')">
+      <div class="project-img-bg">🩺</div>
+      <span class="project-tag">Wearable · IoT</span>
+      <div class="project-overlay">
+        <h3>Wearable Health Monitor</h3>
+        <p>Embedded wearable device for continuous health parameter monitoring with wireless data transmission and cloud integration.</p>
+        <a class="proj-link" href="https://github.com/blessyedison" target="_blank"><i class='bx bxl-github'></i> View on GitHub →</a>
+      </div>
+    </div>
 
-<p>Real-time system using RTOS tasks for sensor monitoring and safety response.</p>
+    <div class="project-card" onclick="window.open('https://github.com/blessyedison','_blank')">
+      <div class="project-img-bg">🔌</div>
+      <span class="project-tag">CAN · Automotive</span>
+      <div class="project-overlay">
+        <h3>CAN Bus Data Logger</h3>
+        <p>Automotive CAN bus data logging and analysis tool for vehicle diagnostics, supporting multiple CAN frame formats and real-time monitoring.</p>
+        <a class="proj-link" href="https://github.com/blessyedison" target="_blank"><i class='bx bxl-github'></i> View on GitHub →</a>
+      </div>
+    </div>
 
+    <!-- Smart ICU Patient Bed Monitoring -->
+<div class="project-card" onclick="window.open('https://github.com/blessyed/Icu_monitoring-.git','_blank')">
+  <div class="project-img-bg">🏥</div>
+  <span class="project-tag">Healthcare · IoT</span>
+  <div class="project-overlay">
+    <h3>Smart ICU Patient Bed Monitoring</h3>
+    <p>
+      Smart healthcare monitoring system that detects patient movement,
+      monitors temperature variation, controls cooling automatically,
+      and provides emergency alerts using sensors and OLED display.
+    </p>
+    <a class="proj-link"
+       href="https://github.com/blessyed/Icu_monitoring-.git"
+       target="_blank">
+       <i class='bx bxl-github'></i>
+       View on GitHub →
+    </a>
+  </div>
 </div>
 
-
-<div class="project-card">
-
-<img src="images/project2.png">
-
-<h3>Black Car Box</h3>
-
-<p>Vehicle event data recorder implemented using PIC16F877A.</p>
-
+<!-- Smart Door Security -->
+<div class="project-card" onclick="window.open('https://github.com/blessyed/Smart-door-security.git','_blank')">
+  <div class="project-img-bg">🚪</div>
+  <span class="project-tag">Security · Embedded</span>
+  <div class="project-overlay">
+    <h3>Smart Door Security System</h3>
+    <p>
+      Automated smart door system using ultrasonic sensor,
+      buzzer alerts, and servo-based door locking/unlocking
+      with manual approval button.
+    </p>
+    <a class="proj-link"
+       href="https://github.com/blessyed/Smart-door-security.git"
+       target="_blank">
+       <i class='bx bxl-github'></i>
+       View on GitHub →
+    </a>
+  </div>
 </div>
 
-
-<div class="project-card">
-
-<h3>Fault Detection in H Bridge</h3>
-
-<p>Machine learning based inverter fault classification.</p>
-
+<!-- Smart Room Temperature -->
+<div class="project-card" onclick="window.open('https://github.com/blessyed/Smart-Room-Temperature-Control-System.git','_blank')">
+  <div class="project-img-bg">🌡️</div>
+  <span class="project-tag">Automation · IoT</span>
+  <div class="project-overlay">
+    <h3>Smart Room Temperature Control</h3>
+    <p>
+      Automatic room monitoring system using DHT11 sensor
+      with automatic fan control, buzzer alerts,
+      LED indication, and OLED monitoring.
+    </p>
+    <a class="proj-link"
+       href="https://github.com/blessyed/Smart-Room-Temperature-Control-System.git"
+       target="_blank">
+       <i class='bx bxl-github'></i>
+       View on GitHub →
+    </a>
+  </div>
 </div>
 
+<!-- Street Light -->
+<div class="project-card" onclick="window.open('https://github.com/blessyed/Street_Light.git','_blank')">
+  <div class="project-img-bg">💡</div>
+  <span class="project-tag">Smart Lighting</span>
+  <div class="project-overlay">
+    <h3>Automatic Street Light System</h3>
+    <p>
+      Smart street lighting system using LDR sensor
+      to detect day/night conditions and control
+      NeoPixel LEDs with OLED monitoring.
+    </p>
+    <a class="proj-link"
+       href="https://github.com/blessyed/Street_Light.git"
+       target="_blank">
+       <i class='bx bxl-github'></i>
+       View on GitHub →
+    </a>
+  </div>
 </div>
 
+<!-- Occupancy Counter -->
+<div class="project-card" onclick="window.open('https://github.com/blessyed/Occupancy-Counter.git','_blank')">
+  <div class="project-img-bg">👥</div>
+  <span class="project-tag">IR Sensor · Counter</span>
+  <div class="project-overlay">
+    <h3>Occupancy Counter System</h3>
+    <p>
+      IR sensor-based occupancy counter that tracks movement,
+      displays count on OLED, provides NeoPixel indication,
+      and supports manual reset functionality.
+    </p>
+    <a class="proj-link"
+       href="https://github.com/blessyed/Occupancy-Counter.git"
+       target="_blank">
+       <i class='bx bxl-github'></i>
+       View on GitHub →
+    </a>
+  </div>
+</div>
+
+  </div>
 </section>
 
-
-<section id="training">
-
-<h2>Training</h2>
-
-<div class="card">
-
-<h3>Advanced Embedded Systems – Emertxe</h3>
-
-<ul>
-
-<li>C Programming</li>
-<li>C++</li>
-<li>Data Structures</li>
-<li>Embedded Linux</li>
-
-</ul>
-
-</div>
-
-</section>
-
-
-<section id="achievements">
-
-<h2>Achievements</h2>
-
-<ul class="achievements">
-
-<li>President – EEE Department</li>
-
-<li>Finalist – Niral Thiruvizha Project Competition</li>
-
-<li>Published research paper</li>
-
-<li>6-month Industrial Internship at Kawasaki Robotics</li>
-
-</ul>
-
-</section>
-
-
+<!-- CONTACT -->
+<!-- CONTACT -->
 <section id="contact">
 
-<h2>Contact</h2>
+  <div class="fade-in">
+    <p class="section-tag">Let's connect</p>
+    <h2 class="section-title">
+      Contact <span>Me</span>
+    </h2>
+  </div>
 
-<form>
+  <div class="contact-grid fade-in">
 
-<input type="text" placeholder="Your Name">
+    <!-- CONTACT INFO -->
+    <div class="contact-info">
 
-<input type="email" placeholder="Email">
+      <h3>Let's Work Together</h3>
 
-<textarea placeholder="Message"></textarea>
+      <p>
+        I'm currently open to embedded systems roles,
+        internships, automotive embedded opportunities,
+        RTOS development, industrial automation,
+        and collaborative embedded projects.
+      </p>
 
-<button type="submit">Send Message</button>
+      <!-- EMAIL -->
+      <div class="contact-detail">
+        <i class='bx bx-envelope'></i>
+        <span>blessyedison14@gmail.com</span>
+      </div>
 
-</form>
+      <!-- PHONE -->
+      <div class="contact-detail">
+        <i class='bx bx-phone'></i>
+        <span>+91 9488128754</span>
+      </div>
+
+      <!-- LOCATION -->
+      <div class="contact-detail">
+        <i class='bx bx-map'></i>
+        <span>Bengaluru, Karnataka, India</span>
+      </div>
+
+      <!-- SOCIAL LINKS -->
+      <div class="social-links">
+
+        <!-- GitHub -->
+        <a href="https://github.com/blessyed"
+           target="_blank"
+           aria-label="GitHub">
+           <i class='bx bxl-github'></i>
+        </a>
+
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/in/blessyedison11/"
+           target="_blank"
+           aria-label="LinkedIn">
+           <i class='bx bxl-linkedin'></i>
+        </a>
+
+        <!-- Email -->
+        <a href="mailto:blessyedison14@gmail.com"
+           aria-label="Email">
+           <i class='bx bx-envelope'></i>
+        </a>
+
+      </div>
+
+    </div>
+
+    <!-- CONTACT FORM -->
+    <form class="contact-form"
+          action="https://formsubmit.co/blessyedison14@gmail.com"
+          method="POST">
+
+      <!-- Disable captcha -->
+      <input type="hidden"
+             name="_captcha"
+             value="false">
+
+      <!-- Email subject -->
+      <input type="hidden"
+             name="_subject"
+             value="New Portfolio Contact Message">
+
+      <!-- Optional redirect after submit -->
+      <!-- Replace with your deployed portfolio URL -->
+      <input type="hidden"
+             name="_next"
+             value="https://yourwebsite.com">
+
+      <div class="form-group">
+        <label>YOUR NAME</label>
+
+        <input type="text"
+               name="name"
+               placeholder="Blessy Edison"
+               required>
+      </div>
+
+      <div class="form-group">
+        <label>YOUR EMAIL</label>
+
+        <input type="email"
+               name="email"
+               placeholder="hello@example.com"
+               required>
+      </div>
+
+      <div class="form-group">
+        <label>SUBJECT</label>
+
+        <input type="text"
+               name="subject"
+               placeholder="Project Collaboration"
+               required>
+      </div>
+
+      <div class="form-group">
+        <label>YOUR MESSAGE</label>
+
+        <textarea name="message"
+                  placeholder="Tell me about your project or opportunity..."
+                  required></textarea>
+      </div>
+
+      <button type="submit"
+              class="submit-btn">
+              SEND MESSAGE
+      </button>
+
+    </form>
+
+  </div>
 
 </section>
 
-
 <footer>
-
-<p>© 2026 Blessy Edison</p>
-
+  <p>© 2026 <span>Blessy Edison</span> · Built with passion for embedded systems</p>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+<script>
+// Typed.js
+var typed = new Typed("#typing", {
+  strings: ["Embedded Engineer","STM32 Developer","RTOS Engineer","Embedded AI Developer","PCB Designer"],
+  typeSpeed: 70, backSpeed: 50, loop: true
+});
 
-<script src="script.js"></script>
+// Mobile menu
+document.getElementById('menuBtn').onclick = () => {
+  document.getElementById('navbar').classList.toggle('open');
+};
 
+// Smooth scroll
+document.querySelectorAll("a[href^='#']").forEach(a => {
+  a.addEventListener("click", function(e) {
+    const target = document.querySelector(this.getAttribute("href"));
+    if(target){ e.preventDefault(); target.scrollIntoView({behavior:"smooth"}); }
+  });
+});
+
+// Intersection Observer for fade-in and skill animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) {
+      entry.target.classList.add('visible');
+
+      // Skill bars
+      entry.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+        setTimeout(() => { bar.style.width = bar.dataset.w + '%'; }, 200);
+      });
+
+      // Circle fills
+      entry.target.querySelectorAll('.circle-fill').forEach(circle => {
+        const pct = +circle.dataset.pct;
+        const circ = 2 * Math.PI * 40;
+        const offset = circ - (pct/100)*circ;
+        setTimeout(() => { circle.style.strokeDashoffset = offset; }, 300);
+      });
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
